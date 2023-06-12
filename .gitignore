@@ -1,2 +1,7 @@
 *~
 output/
+
+*.png
+*.jpg
+*.tga
+*.tiff
