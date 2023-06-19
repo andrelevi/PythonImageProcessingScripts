@@ -19,7 +19,7 @@ root.call('wm','attributes','.','-topmost', True)
 
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
-output_dir = script_dir + "output/"
+output_dir = script_dir + "./"
 print("Output dir: " + output_dir);
 
 # Opening image.

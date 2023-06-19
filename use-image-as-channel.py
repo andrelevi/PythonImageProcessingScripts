@@ -20,7 +20,7 @@ root = Tk()
 root.withdraw()
 root.call('wm','attributes','.','-topmost', True)
 
-output_dir = "output"
+output_dir = "./"
 
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
