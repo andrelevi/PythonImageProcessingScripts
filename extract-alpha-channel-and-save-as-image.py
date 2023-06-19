@@ -32,13 +32,9 @@ bg = Image.new("RGBA", image.size, (0,0,0,255))
 bg.paste(alpha, mask=alpha)
 
 # Since the bg image started as RGBA, we can save some space by converting it
-# to grayscale ('L') Optionally, we can convert the image to be indexed which
-# saves some more space ('P') In my experience, converting directly to 'P'
-# produces both the Gray channel and an Alpha channel when viewed in GIMP,
-# althogh the file sizes is about the same
-
+# to grayscale ('L')
 destination = output_dir + "/" + os.path.splitext(file_name)[0] + "_alpha.png"
-bg.convert('L').convert('P', palette=Image.ADAPTIVE, colors=8).save(os.path.join(script_dir, destination), "PNG", optimize=True)
+bg.convert('L').save(os.path.join(script_dir, destination), "PNG", optimize=True)
 
 print("Saved: " + destination)
 
