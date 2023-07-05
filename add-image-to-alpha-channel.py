@@ -13,13 +13,14 @@ rgb_file_name = sys.argv[1]
 alpha_image_name = sys.argv[2]
 alpha_type = sys.argv[3]
 
-if len(sys.argv) != 5: 
+exponent_power = 1
+
+if len(sys.argv) >= 5: 
     exponent_power = sys.argv[4]
-else: 
-    exponent_power = 1
 
 print("Image to modify: " + rgb_file_name)
 print("Image to add as alpha channel: " + alpha_image_name)
+print("Exponent power: " + str(exponent_power))
 
 root = Tk()
 root.withdraw()
