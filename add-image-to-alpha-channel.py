@@ -5,6 +5,9 @@ from tkinter import Tk, filedialog
 import os
 import sys
 
+def clamp(x, minimum, maximum):
+    return max(minimum, min(x, maximum))
+
 if len(sys.argv) < 4:
     print("Bad arguments. Args: RGB image, alpha channel image, suffix, exponent power.")
     exit()
@@ -16,7 +19,7 @@ alpha_type = sys.argv[3]
 exponent_power = 1
 
 if len(sys.argv) >= 5: 
-    exponent_power = sys.argv[4]
+    exponent_power = float(sys.argv[4])
 
 print("Image to modify: " + rgb_file_name)
 print("Image to add as alpha channel: " + alpha_image_name)
@@ -41,7 +44,10 @@ alpha = r.convert("L")
 if exponent_power != 1:
     for x in range(alpha.width):
         for y in range(alpha.height):
-            altered_pixel = pow(alpha.getpixel((x,y)), exponent_power);
+            pixel = alpha.getpixel((x,y))
+            altered_pixel = pow(pixel, exponent_power)
+            altered_pixel = clamp(altered_pixel, 0, 254) # 254 seems to be the max valid value
+            altered_pixel = round(altered_pixel)
             alpha.putpixel((x, y), altered_pixel)
 
 rgb_image.putalpha(alpha)
@@ -53,3 +59,4 @@ rgb_image.save(os.path.join(script_dir, destination), "PNG")
 print("Saved: " + destination)
 
 exit()
+
