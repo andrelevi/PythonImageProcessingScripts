@@ -1,5 +1,9 @@
 # PythonImageProcessingScripts
 
+## Python Version
+
+Last tested with Python 3.11
+
 ## Example Usage
 `./add-image-to-alpha-channel.py source.png smoothness.png smoothness`
 
