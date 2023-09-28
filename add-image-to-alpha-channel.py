@@ -39,6 +39,12 @@ alpha_image = Image.open(os.path.join(script_dir, alpha_image_name))
 alpha_image = alpha_image.convert("RGB")
 r,g,b = alpha_image.split()
 
+if rgb_image.size != alpha_image.size:
+    print("ERROR: Images are different sizes")
+    print("RGB Image Size: " + str(rgb_image.size[0]) + "," + str(rgb_image.size[1]))
+    print("Alpha Image Size: " + str(alpha_image.size[0]) + "," + str(alpha_image.size[1]))
+    exit()
+
 alpha = r.convert("L")
 
 if exponent_power != 1:
