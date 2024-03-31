@@ -20,10 +20,10 @@ Gamma to Linear:\
 ### Invert Image
 
 Invert RGB channels:\
-`python invert-image.py -i image.png -c rgb`
+`python invert-image.py -i roughness.png -c rgb`
 
 Invert Alpha channel:\
-`python invert-image.py -i image.png -c a`
+`python invert-image.py -i metallic_roughness.png -c a`
 
 ### Resize Image
 `python resize-image.py -i image.png --width 2048 --height 1024`
