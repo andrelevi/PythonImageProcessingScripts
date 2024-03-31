@@ -10,6 +10,7 @@ parser=argparse.ArgumentParser()
 parser.add_argument("-i", '--image_name', help="Set image", required=True)
 parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
 parser.add_argument("-c", '--channel', help="Set channel type to invert: 'rgb' or 'a'", required=True)
+parser.add_argument('--image_type', help="Set image type", required=False, default="png")
 
 args=parser.parse_args()
 
@@ -40,9 +41,9 @@ if args.channel == "a":
 
 inverted_image = Image.merge(image.mode, (r, g, b, a))
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_inverted_" + args.channel + image_extension
+destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_inverted_" + args.channel + "." + args.image_type
 
-inverted_image.save(destination)
+inverted_image.save(destination, args.image_type)
 
 print("Saved: " + destination)
 

@@ -12,6 +12,7 @@ parser.add_argument("-alpha", '--alpha_image_name', help="Set Alpha image", requ
 parser.add_argument("--suffix", help="Set suffix for output image", required=False, default="smoothness")
 parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
 parser.add_argument('--exponent_power', help="Exponential power of the alpha image", required=False, default=1)
+parser.add_argument('--image_type', help="Set image type", required=False, default="png")
 
 args=parser.parse_args()
 
@@ -28,10 +29,9 @@ script_dir = os.path.dirname(__file__)
 dir = script_dir if args.directory == "./" else args.directory
 
 _, rgb_image_extension = os.path.splitext(os.path.join(dir, args.rgb_image_name))
-rgb_image = Image.open(os.path.join(dir, args.rgb_image_name))
-alpha_image = Image.open(os.path.join(dir, args.alpha_image_name))
+rgb_image = Image.open(os.path.join(dir, args.rgb_image_name)).convert("RGB")
+alpha_image = Image.open(os.path.join(dir, args.alpha_image_name)).convert("RGB")
 
-alpha_image = alpha_image.convert("RGB")
 r,g,b = alpha_image.split()
 
 if rgb_image.size != alpha_image.size:
@@ -56,7 +56,7 @@ if args.exponent_power != 1:
 
 rgb_image.putalpha(alpha)
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.rgb_image_name)[0] + "_" + args.suffix + rgb_image_extension
+destination = dir.strip('/') + "/" + os.path.splitext(args.rgb_image_name)[0] + "_" + args.suffix + "." + args.image_type
 
 rgb_image.save(destination)
 

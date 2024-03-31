@@ -11,6 +11,7 @@ parser.add_argument("-i", '--image_name', help="Set image", required=True)
 parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
 parser.add_argument("-w", '--width', help="Set width", required=False, default=-1, type=int)
 parser.add_argument('--height', help="Set height", required=False, default=-1, type=int)
+parser.add_argument('--image_type', help="Set image type", required=False, default="png")
 
 args=parser.parse_args()
 
@@ -38,9 +39,9 @@ height = args.height if args.height != -1 else image.height
 
 resized_image = image.resize((width, height))
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_resized" + image_extension
+destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_resized" + "." + args.image_type
 
-resized_image.save(destination)
+resized_image.save(destination, args.image_type)
 
 print("Saved: " + destination)
 
