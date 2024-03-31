@@ -1,36 +1,46 @@
 #!/usr/local/bin/python3
 
-from PIL import Image, ImageEnhance
-from tkinter import Tk, filedialog
+from PIL import Image
+from tkinter import Tk
 import os
-import sys
-import PIL.ImageOps
+import argparse
 
-if len(sys.argv) < 1:
-    print("Bad arguments. Args: RGB image")
-    exit()
+parser=argparse.ArgumentParser()
 
-file_name = sys.argv[1]
-width = int(sys.argv[2])
-height = int(sys.argv[3])
+parser.add_argument("-i", '--image_name', help="Set image", required=True)
+parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
+parser.add_argument("-w", '--width', help="Set width", required=False, default=-1, type=int)
+parser.add_argument('--height', help="Set height", required=False, default=-1, type=int)
 
-print("Image to modify: " + file_name)
+args=parser.parse_args()
+
+print("Directory: " + args.directory)
+print("Image to modify: " + args.image_name)
+print("Width: " + str(args.width))
+print("Height: " + str(args.height))
 
 root = Tk()
 root.withdraw()
 root.call('wm','attributes','.','-topmost', True)
+script_dir = os.path.dirname(__file__)
 
-output_dir = "./"
+dir = script_dir if args.directory == "./" else args.directory
 
-script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+_, image_extension = os.path.splitext(os.path.join(dir, args.image_name))
+image = Image.open(os.path.join(dir, args.image_name)).convert('RGBA')
 
-image = Image.open(os.path.join(script_dir, file_name)).convert('RGB')
+print(image.width)
+
+r, g, b, a = image.split()
+
+width = args.width if args.width != -1 else image.width
+height = args.height if args.height != -1 else image.height
 
 resized_image = image.resize((width, height))
 
-destination = output_dir + "/" + os.path.splitext(file_name)[0] + "_resized.png"
+destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_resized" + image_extension
 
-resized_image.save(destination, "PNG")
+resized_image.save(destination)
 
 print("Saved: " + destination)
 
