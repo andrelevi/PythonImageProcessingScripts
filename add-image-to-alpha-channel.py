@@ -30,7 +30,6 @@ root.call('wm','attributes','.','-topmost', True)
 script_dir = os.path.dirname(__file__)
 
 dir = script_dir if args.directory == "./" else args.directory
-print(dir)
 
 _, rgb_image_extension = os.path.splitext(os.path.join(dir, args.rgb_image_name))
 rgb_image = Image.open(os.path.join(dir, args.rgb_image_name))
@@ -57,7 +56,6 @@ if args.exponent_power != 1:
             alpha.putpixel((x, y), altered_pixel)
 
 rgb_image.putalpha(alpha)
-
 
 destination = dir.strip('/') + "/" + os.path.splitext(args.rgb_image_name)[0] + "_" + args.suffix + rgb_image_extension
 
