@@ -1,12 +1,9 @@
 #!/usr/local/bin/python3
 
-from PIL import Image, ImageEnhance
-from tkinter import Tk, filedialog
+from PIL import Image
+from tkinter import Tk
 import os
-import argparse, sys
-
-def clamp(x, minimum, maximum):
-    return max(minimum, min(x, maximum))
+import argparse
 
 parser=argparse.ArgumentParser()
 
@@ -26,7 +23,6 @@ print("Exponent power: " + str(args.exponent_power))
 root = Tk()
 root.withdraw()
 root.call('wm','attributes','.','-topmost', True)
-
 script_dir = os.path.dirname(__file__)
 
 dir = script_dir if args.directory == "./" else args.directory
@@ -45,6 +41,9 @@ if rgb_image.size != alpha_image.size:
     exit()
 
 alpha = r.convert("L")
+
+def clamp(x, minimum, maximum):
+    return max(minimum, min(x, maximum))
 
 if args.exponent_power != 1:
     for x in range(alpha.width):
