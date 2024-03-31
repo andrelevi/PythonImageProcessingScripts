@@ -9,14 +9,14 @@ parser=argparse.ArgumentParser()
 
 parser.add_argument("-i", '--image_name', help="Set image", required=True)
 parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
-parser.add_argument("-c", '--channel', help="Set channel type to invert: 'rgb' or 'a'", required=True)
+parser.add_argument("-c", '--channels', help="Set channels to invert (RGBA)", required=True)
 parser.add_argument('--image_type', help="Set image type", required=False, default="png")
 
 args=parser.parse_args()
 
 print("Directory: " + args.directory)
 print("Image to modify: " + args.image_name)
-print("Target channel: " + args.channel)
+print("Target channels: " + args.channels)
 
 root = Tk()
 root.withdraw()
@@ -33,15 +33,21 @@ r, g, b, a = image.split()
 def invert(image):
     return image.point(lambda p: 255 - p)
 
-if args.channel == "rgb":
-  r, g, b = map(invert, (r, g, b))
+if "r" in args.channels.lower():
+  r = invert(r)
 
-if args.channel == "a":
+if "g" in args.channels.lower():
+  g = invert(g)
+
+if "b" in args.channels.lower():
+  b = invert(b)
+
+if "a" in args.channels.lower():
   a = invert(a)
 
 inverted_image = Image.merge(image.mode, (r, g, b, a))
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_inverted_" + args.channel + "." + args.image_type
+destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_inverted_" + args.channels + "." + args.image_type
 
 inverted_image.save(destination, args.image_type)
 
