@@ -4,7 +4,7 @@ A set of image utils geared towards game development and handling of various PBR
 
 ## Python Version
 
-Last tested with Python 3.11
+Last tested with `Python 3.11` on Windows.
 
 ## Example Usage
 
