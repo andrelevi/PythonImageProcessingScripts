@@ -3,38 +3,34 @@
 from PIL import Image, ImageEnhance
 from tkinter import Tk, filedialog
 import os
-import sys
+import argparse, sys
 
 def clamp(x, minimum, maximum):
     return max(minimum, min(x, maximum))
 
-if len(sys.argv) < 4:
-    print("Bad arguments. Args: RGB image, alpha channel image, suffix, exponent power.")
-    exit()
+parser=argparse.ArgumentParser()
 
-rgb_file_name = sys.argv[1]
-alpha_image_name = sys.argv[2]
-alpha_type = sys.argv[3]
+parser.add_argument("-rgb", '--rgb_image_name', help="Set RGB image", required=True)
+parser.add_argument("-alpha", '--alpha_image_name', help="Set Alpha image", required=True)
+parser.add_argument("-suffix", help="Set suffix for output image", required=False, default="smoothness")
+parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./")
+parser.add_argument("-e", '--exponent_power', help="Exponential power of the alpha image", required=False, default=1)
 
-exponent_power = 1
+args=parser.parse_args()
 
-if len(sys.argv) >= 5: 
-    exponent_power = float(sys.argv[4])
-
-print("Image to modify: " + rgb_file_name)
-print("Image to add as alpha channel: " + alpha_image_name)
-print("Exponent power: " + str(exponent_power))
+print("Directory: " + args.directory)
+print("RGB image: " + args.rgb_image_name)
+print("Alpha image: " + args.alpha_image_name)
+print("Exponent power: " + str(args.exponent_power))
 
 root = Tk()
 root.withdraw()
 root.call('wm','attributes','.','-topmost', True)
 
-output_dir = "./"
-
 script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
 
-rgb_image = Image.open(os.path.join(script_dir, rgb_file_name))
-alpha_image = Image.open(os.path.join(script_dir, alpha_image_name))
+rgb_image = Image.open(os.path.join(script_dir, args.rgb_image_name))
+alpha_image = Image.open(os.path.join(script_dir, args.alpha_image_name))
 
 alpha_image = alpha_image.convert("RGB")
 r,g,b = alpha_image.split()
@@ -47,18 +43,19 @@ if rgb_image.size != alpha_image.size:
 
 alpha = r.convert("L")
 
-if exponent_power != 1:
+if args.exponent_power != 1:
     for x in range(alpha.width):
         for y in range(alpha.height):
             pixel = alpha.getpixel((x,y))
-            altered_pixel = pow(pixel, exponent_power)
+            altered_pixel = pow(pixel, args.exponent_power)
             altered_pixel = clamp(altered_pixel, 0, 254) # 254 seems to be the max valid value
             altered_pixel = round(altered_pixel)
             alpha.putpixel((x, y), altered_pixel)
 
 rgb_image.putalpha(alpha)
 
-destination = output_dir + "/" + os.path.splitext(rgb_file_name)[0] + "_" + alpha_type + ".png"
+directory = args.directory.strip('/')
+destination = directory + "/" + os.path.splitext(args.rgb_image_name)[0] + "_" + args.suffix + ".png"
 
 rgb_image.save(os.path.join(script_dir, destination), "PNG")
 
