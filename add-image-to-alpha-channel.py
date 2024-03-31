@@ -27,10 +27,14 @@ root = Tk()
 root.withdraw()
 root.call('wm','attributes','.','-topmost', True)
 
-script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
+script_dir = os.path.dirname(__file__)
 
-rgb_image = Image.open(os.path.join(script_dir, args.rgb_image_name))
-alpha_image = Image.open(os.path.join(script_dir, args.alpha_image_name))
+dir = script_dir if args.directory == "./" else args.directory
+print(dir)
+
+_, rgb_image_extension = os.path.splitext(os.path.join(dir, args.rgb_image_name))
+rgb_image = Image.open(os.path.join(dir, args.rgb_image_name))
+alpha_image = Image.open(os.path.join(dir, args.alpha_image_name))
 
 alpha_image = alpha_image.convert("RGB")
 r,g,b = alpha_image.split()
@@ -54,10 +58,10 @@ if args.exponent_power != 1:
 
 rgb_image.putalpha(alpha)
 
-directory = args.directory.strip('/')
-destination = directory + "/" + os.path.splitext(args.rgb_image_name)[0] + "_" + args.suffix + ".png"
 
-rgb_image.save(os.path.join(script_dir, destination), "PNG")
+destination = dir.strip('/') + "/" + os.path.splitext(args.rgb_image_name)[0] + "_" + args.suffix + rgb_image_extension
+
+rgb_image.save(destination)
 
 print("Saved: " + destination)
 
