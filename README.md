@@ -1,8 +1,6 @@
 # PythonImageProcessingScripts
 
-A set of image utils geared towards game development and handling of various PBR texture types.
-
-## Python Version
+A set of image utils geared towards game development and handling of various PBR texture types.\
 
 Last tested with `Python 3.11` on Windows.
 
