@@ -2,11 +2,12 @@
 
 A set of image utils geared towards game development and handling of various PBR texture types.
 
-When uses asset with PBR textures not packed in a required format for game-engine shaders (Unity, Unreal, etc), you must package the texture maps in the necessary channels. For example, Unity requires metallic data packed in the (R) channel, and smoothness packed in the (A) channel. However, some assets may only provide a roughness map, meaning you must first invert that roughness map to create a smoothness map, and then set that data as the alpha channel of a metallic map.
-
 Last tested with `Python 3.11` on Windows.
 
-## Example Usage
+### Purpose
+Game engines (Unity, Unreal, etc) use shares that require a specific packed texture format for their shaders. For example, Unity requires metallic data packed in the (R) channel, and smoothness packed in the (A) channel. However, some assets may only provide a roughness map, meaning you must first invert that roughness map to create a smoothness map, and then set that smoothness map as the alpha channel of a metallic map.
+
+# Example Usage
 
 Place images in `images/`. By default, scripts search `images/` for relative image file paths.
 
