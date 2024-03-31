@@ -10,7 +10,7 @@ parser=argparse.ArgumentParser()
 parser.add_argument("-rgb", '--rgb_image_name', help="Set RGB image", required=True)
 parser.add_argument("-alpha", '--alpha_image_name', help="Set Alpha image", required=True)
 parser.add_argument("--suffix", help="Set suffix for output image", required=False, default="smoothness")
-parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./")
+parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
 parser.add_argument('--exponent_power', help="Exponential power of the alpha image", required=False, default=1)
 
 args=parser.parse_args()

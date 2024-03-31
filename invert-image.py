@@ -8,7 +8,7 @@ import argparse
 parser=argparse.ArgumentParser()
 
 parser.add_argument("-i", '--image_name', help="Set image", required=True)
-parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./")
+parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
 parser.add_argument("-c", '--channel', help="Set channel type to invert: 'rgb' or 'a'", required=True)
 
 args=parser.parse_args()
@@ -20,7 +20,6 @@ print("Target channel: " + args.channel)
 root = Tk()
 root.withdraw()
 root.call('wm','attributes','.','-topmost', True)
-
 script_dir = os.path.dirname(__file__)
 
 dir = script_dir if args.directory == "./" else args.directory
