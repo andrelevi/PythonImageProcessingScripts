@@ -1,5 +1,7 @@
 # PythonImageProcessingScripts
 
+A set of image utils geared towards game development and handling of various PBR texture types.
+
 ## Python Version
 
 Last tested with Python 3.11
@@ -7,13 +9,13 @@ Last tested with Python 3.11
 ## Example Usage
 
 ### Add Image to Alpha Channel
-`./add-image-to-alpha-channel.py -rgb source.png -a smoothness.png`
+`./add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png`
 
 Linear to Gamma:\
-`./add-image-to-alpha-channel.py -rgb source.png -a smoothness.png --suffix smoothness --exponent_power 0.454545`
+`./add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png --suffix smoothness --exponent_power 0.454545`
 
 Gamma to Linear:\
-`./add-image-to-alpha-channel.py -rgb source.png -a smoothness.png --suffix smoothness  --exponent_power 2.2`
+`./add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png --suffix smoothness  --exponent_power 2.2`
 
 ### Invert Image
 
