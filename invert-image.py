@@ -37,11 +37,11 @@ if args.channel == "rgb":
   r, g, b = map(invert, (r, g, b))
 
 if args.channel == "a":
-  a = map(invert, (a))
+  a = invert(a)
 
 inverted_image = Image.merge(image.mode, (r, g, b, a))
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_inverted" + image_extension
+destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_inverted_" + args.channel + image_extension
 
 inverted_image.save(destination)
 
