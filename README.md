@@ -6,14 +6,16 @@ Last tested with `Python 3.11` on Windows.
 
 ## Example Usage
 
+Place images in `images/`. By default, scripts search `images/` for relative image file paths.
+
 ### Add Image to Alpha Channel
-`./add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png`
+`python add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png`
 
 Linear to Gamma:\
-`./add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png --suffix smoothness --exponent_power 0.454545`
+`python add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png --suffix smoothness --exponent_power 0.454545`
 
 Gamma to Linear:\
-`./add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png --suffix smoothness  --exponent_power 2.2`
+`python add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png --suffix smoothness  --exponent_power 2.2`
 
 ### Invert Image
 
