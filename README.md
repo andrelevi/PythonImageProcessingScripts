@@ -32,4 +32,4 @@ Invert Alpha channel:\
 `python resize-image.py -i image.png --width 2048 --height 1024`
 
 ### Extract Channel Into Image
-`python extract-channels-and-save-as-image.py -i OcclusionRoughnessMetallic.png -c r`
+`python extract-channel-and-save-as-image.py -i OcclusionRoughnessMetallic.png -c r`
