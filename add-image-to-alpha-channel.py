@@ -1,14 +1,14 @@
 #!/usr/local/bin/python3
 
 from PIL import Image
-from tkinter import Tk
-import os
 import argparse
+from utils import get_path, get_dir, save_image
 
 parser=argparse.ArgumentParser()
 
 parser.add_argument("-rgb", '--rgb_image_name', help="Set RGB image", required=True)
 parser.add_argument("-alpha", '--alpha_image_name', help="Set Alpha image", required=True)
+parser.add_argument("-o", '--output_path', help="Set output path", required=False, default="")
 parser.add_argument("--suffix", help="Set suffix for output image", required=False, default="smoothness")
 parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
 parser.add_argument('--exponent_power', help="Exponential power of the alpha image", required=False, default=1)
@@ -21,16 +21,13 @@ print("RGB image: " + args.rgb_image_name)
 print("Alpha image: " + args.alpha_image_name)
 print("Exponent power: " + str(args.exponent_power))
 
-root = Tk()
-root.withdraw()
-root.call('wm','attributes','.','-topmost', True)
-script_dir = os.path.dirname(__file__)
+dir = get_dir(args.directory)
 
-dir = script_dir if args.directory == "./" else args.directory
+rgb_image_path, rgb_image_extension = get_path(args.rgb_image_name, dir)
+alpha_image_path, alpha_image_extension = get_path(args.alpha_image_name, dir)
 
-_, rgb_image_extension = os.path.splitext(os.path.join(dir, args.rgb_image_name))
-rgb_image = Image.open(os.path.join(dir, args.rgb_image_name)).convert("RGB")
-alpha_image = Image.open(os.path.join(dir, args.alpha_image_name)).convert("RGB")
+rgb_image = Image.open(rgb_image_path).convert("RGB")
+alpha_image = Image.open(alpha_image_path).convert("RGB")
 
 r,g,b = alpha_image.split()
 
@@ -56,11 +53,7 @@ if args.exponent_power != 1:
 
 rgb_image.putalpha(alpha)
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.rgb_image_name)[0] + "_" + args.suffix + "." + args.image_type
-
-rgb_image.save(destination)
-
-print("Saved: " + destination)
+save_image(rgb_image, args.suffix, rgb_image_path, dir, args.image_type, args.output_path)
 
 exit()
 
