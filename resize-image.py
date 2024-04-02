@@ -39,7 +39,7 @@ height = args.height if args.height != -1 else image.height
 
 resized_image = image.resize((width, height))
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_resized" + "." + args.image_type
+destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_" + str(width) + "_" + str(height) + "." + args.image_type
 
 resized_image.save(destination, args.image_type)
 
