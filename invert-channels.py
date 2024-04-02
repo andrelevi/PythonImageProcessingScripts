@@ -1,13 +1,13 @@
 #!/usr/local/bin/python3
 
 from PIL import Image
-from tkinter import Tk
-import os
 import argparse
+from utils import get_path, get_dir, save_image
 
 parser=argparse.ArgumentParser()
 
 parser.add_argument("-i", '--image_name', help="Set image", required=True)
+parser.add_argument("-o", '--output_path', help="Set output path", required=False, default="")
 parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
 parser.add_argument("-c", '--channels', help="Set channels to invert (RGBA)", required=True)
 parser.add_argument('--image_type', help="Set image type", required=False, default="png")
@@ -18,15 +18,11 @@ print("Directory: " + args.directory)
 print("Image to modify: " + args.image_name)
 print("Target channels: " + args.channels)
 
-root = Tk()
-root.withdraw()
-root.call('wm','attributes','.','-topmost', True)
-script_dir = os.path.dirname(__file__)
+dir = get_dir(args.directory)
 
-dir = script_dir if args.directory == "./" else args.directory
+image_path, image_extension = get_path(args.image_name, dir)
 
-_, image_extension = os.path.splitext(os.path.join(dir, args.image_name))
-image = Image.open(os.path.join(dir, args.image_name)).convert('RGBA')
+image = Image.open(image_path).convert('RGBA')
 
 r, g, b, a = image.split()
 
@@ -47,10 +43,8 @@ if "a" in args.channels.lower():
 
 output_image = Image.merge(image.mode, (r, g, b, a))
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_inverted_" + args.channels + "." + args.image_type
+suffix = "_inverted_" + args.channels
 
-output_image.save(destination, args.image_type)
-
-print("Saved: " + destination)
+save_image(output_image, suffix, image_path, dir, args.image_type, args.output_path)
 
 exit()

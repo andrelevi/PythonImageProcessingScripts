@@ -20,13 +20,13 @@ Linear to Gamma:\
 Gamma to Linear:\
 `python add-image-to-alpha-channel.py -rgb specular.png -a smoothness.png --suffix smoothness  --exponent_power 2.2`
 
-### Invert Image
+### Invert Channels
 
 Invert RGB channels:\
-`python invert-image.py -i roughness.png -c rgb`
+`python invert-channels.py -i roughness.png -c rgb`
 
 Invert Alpha channel:\
-`python invert-image.py -i metallic_roughness.png -c a`
+`python invert-channels.py -i metallic_roughness.png -c a`
 
 ### Resize Image
 `python resize-image.py -i image.png --width 2048 --height 1024`
