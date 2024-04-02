@@ -27,4 +27,5 @@ def get_dir(directory):
 
 
 def get_path(input_path, directory):
+  # Check if absolute path exists, if not try using relative path.
   return (input_path if os.path.isfile(input_path) else os.path.join(directory, input_path), os.path.splitext(input_path))

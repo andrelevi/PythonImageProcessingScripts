@@ -1,8 +1,6 @@
 #!/usr/local/bin/python3
 
 from PIL import Image
-from tkinter import Tk
-import os
 import argparse
 from utils import get_path, get_dir, save_image
 
@@ -24,7 +22,6 @@ print("Height: " + str(args.height))
 
 dir = get_dir(args.directory)
 
-# Check if absolute path exists, if not try using relative path.
 image_path, image_extension = get_path(args.image_name, dir)
 
 image = Image.open(image_path).convert('RGBA')
