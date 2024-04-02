@@ -7,7 +7,8 @@ import argparse
 
 parser=argparse.ArgumentParser()
 
-parser.add_argument("-i", '--image_name', help="Set image", required=True)
+parser.add_argument("-i", '--image_name', help="Set input image", required=True)
+parser.add_argument("-o", '--output_path', help="Set output path", required=False, default="")
 parser.add_argument("-d", '--directory', help="Set directory. Defaults to CWD", required=False, default="./images/")
 parser.add_argument("-w", '--width', help="Set width", required=False, default=-1, type=int)
 parser.add_argument('--height', help="Set height", required=False, default=-1, type=int)
@@ -27,10 +28,11 @@ script_dir = os.path.dirname(__file__)
 
 dir = script_dir if args.directory == "./" else args.directory
 
-_, image_extension = os.path.splitext(os.path.join(dir, args.image_name))
-image = Image.open(os.path.join(dir, args.image_name)).convert('RGBA')
+# Check if absolute path exists, if not try using relative path.
+image_path = args.image_name if os.path.isfile(args.image_name) else os.path.join(dir, args.image_name)
 
-print(image.width)
+_, image_extension = os.path.splitext(image_path)
+image = Image.open(image_path).convert('RGBA')
 
 r, g, b, a = image.split()
 
@@ -39,7 +41,12 @@ height = args.height if args.height != -1 else image.height
 
 resized_image = image.resize((width, height))
 
-destination = dir.strip('/') + "/" + os.path.splitext(args.image_name)[0] + "_" + str(width) + "_" + str(height) + "." + args.image_type
+file_name = os.path.splitext(os.path.basename(image_path))[0]
+
+destination = dir.strip('/') + "/" + file_name + "_" + str(width) + "_" + str(height) + "." + args.image_type
+
+if args.output_path != "":
+  destination = args.output_path
 
 resized_image.save(destination, args.image_type)
 
