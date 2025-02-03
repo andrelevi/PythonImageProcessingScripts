@@ -37,6 +37,9 @@ if args.channel == "g":
 if args.channel == "b":
   channels = (b, b, b, a)
 
+if args.channel == "a":
+  channels = (a, a, a, a)
+
 output_image = Image.merge(image.mode, channels)
 
 suffix = "_extracted_" + args.channel
